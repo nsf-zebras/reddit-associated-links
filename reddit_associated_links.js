@@ -3,18 +3,36 @@ javascript:(function() {
   /*  
       AUTHOR:       NSF_Zebras 
 
-      Version:      1.0.0 
+      Version:      1.0 
 
       Description:  Quickly search cross posts (of highlighted link) on reddit 
                     for any links posted as a comment, hoping to find the source! 
                     In other words, it will show you every link that has been 
                     posted as a response, including other postings. 
 
-      TODO:     1:  Ensure selected post itself is included in the search
-                2:  Put results in a jQueryUI modal instead of a simple alert box.
+      TODO:     1:  Progress bar for search status
+                2:  Put results in a table instead of simple paragraph rows.
    */
 
-  var globalVersion = "v1.0.0 - NSF_Zebras" ;
+  var globalVersion = "v1.0 - NSF_Zebras" ;
+
+  /*Class definitions*/
+
+  function Link( points, href, text ) { 
+
+      this.points = safelyParseInt( points, 0 ) ; 
+      this.href = href ; 
+      this.text = text ; 
+
+      this.occurrences = 1 ; 
+
+    /*  function isValid() { 
+        return href && text ;
+      }*/
+
+  }
+
+  /*Script */
 
   function main() { 
 
@@ -42,10 +60,18 @@ javascript:(function() {
 
   }
 
+  function safelyParseInt( str, defaultVal ) { 
+    return parseInt( str ) || defaultVal ; 
+  }
+
+  function reverseSort( a, b ) { 
+    return b.points - a.points ;
+  }
+
   function searchCrossPosts( seenit ) { 
 
     var links = new Array() ;
-    var otherSubmissionsCount = jQuery( "a.comments", seenit ).length ; 
+    var submissionsSearched = jQuery( "a.comments", seenit ).length ; 
 
     jQuery( "a.comments", seenit ).each( function( key, commentsUrl ) { 
 
@@ -54,11 +80,8 @@ javascript:(function() {
 
     }) ; 
 
-    links.sort( function (a,b) {
-      return b.split( "|" )[0] - a.split( "|" )[0] ;
-    }) ; 
-
-    showModal( links ) ; 
+    links.sort( reverseSort ) ; 
+    showModal( submissionsSearched, links ) ; 
 
   }
 
@@ -75,16 +98,23 @@ javascript:(function() {
       jQuery( "div.entry", data ).each( function( key, comment ) { 
 
         var points = jQuery( "span.unvoted", comment ).text().split( " " )[ 0 ] ; 
-        var link = jQuery( "div.usertext-body p a", comment ) ; 
+        jQuery( "div.usertext-body p a", comment ).each( function( key, commentLink ){
 
-        if( link ) { 
+          if( commentLink ) { 
 
-          var joined = points + "|" + jQuery( link ).attr( "href" ) + "|" + jQuery( link ).text() ; 
-          /*console.log( joined ) ; */
+            var link = new Link( 
+              points, 
+              jQuery( commentLink ).attr( "href" ), 
+              jQuery( commentLink ).text() 
+            ) ;
 
-          links.push( joined ) ;
+            if( link.href ) {
+              links.push( link ) ; 
+            }
 
-        }
+          }
+
+        }) ; 
 
       })  ; 
 
@@ -117,12 +147,12 @@ javascript:(function() {
 
   }
 
-  function showModal( links ) {
+  function showModal( submissionsSearched, links ) {
     
     /*First remove all previously added modals*/
     jQuery( "div#dialog" ).remove() ;
 
-    var div = buildDiv( links ) ; 
+    var div = buildDiv( submissionsSearched, links ) ; 
     jQuery( "body" ).append( div ) ; 
     jQuery( "div#dialog" ).dialog({
       width:'auto'
@@ -130,15 +160,49 @@ javascript:(function() {
 
   }
 
-  function buildDiv( links ) { 
+  function collapseLinks( links ) { 
+
+    var linksCollapsed = new Array() ;  
+    var linksCollapsedIndex = new Array() ; 
+
+    for( var i = 0 ; i < links.length ; i++ ) { 
+      
+      var indexOfLink = linksCollapsedIndex.indexOf( links[i].href ) ; 
+      if( indexOfLink == -1 ) { 
+        
+        linksCollapsed.push( links[i] ) ; 
+        linksCollapsedIndex.push( links[i].href ) ; 
+
+      } else { 
+
+        var linkModified = linksCollapsed[ indexOfLink ] ; 
+        linkModified.occurrences++ ;
+        linkModified.points += links[i].points ; 
+
+        linksCollapsed[ indexOfLink ] = linkModified ; 
+
+      }
+
+    }
+
+    return linksCollapsed ; 
+
+  }
+
+  function buildDiv( submissionsSearched, links ) { 
 
     var div = "<div id='dialog' title='R.A.L. - " + globalVersion + "'>" ;
 
+    div += "<a>Submissions Searched: " + submissionsSearched + "</a><hr />" ; 
+    div += "<p>Link Occurrences -> Combined Points -> Link</p>" ; 
+
+    links = collapseLinks( links ) ; 
     for( var i = 0 ; i < links.length ; i++ ) { 
 
-      var linkSplit = links[i].split( "|" ) ; 
-      if( linkSplit[1] != "undefined" ) { 
-        div += "<p>" + linkSplit[0] + " -> <a href='" + linkSplit[1] + "'>" + linkSplit[2] + "</a></p>" ; 
+      var link = links[i] ; 
+
+      if( link.href != "undefined" ) { 
+        div += "<p>" + link.occurrences + " -> " + link.points + " -> <a href='" + link.href + "'>" + link.text + "</a></p>" ; 
       }
 
     }
