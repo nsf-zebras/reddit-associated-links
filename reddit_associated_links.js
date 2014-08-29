@@ -26,10 +26,6 @@ javascript:(function() {
 
       this.occurrences = 1 ; 
 
-    /*  function isValid() { 
-        return href && text ;
-      }*/
-
   }
 
   /*Script */
@@ -41,8 +37,10 @@ javascript:(function() {
     var selectedLink = getSelectionLink() ;
     /*console.log( selectedLink ) ; */    
 
-    run( selectedLink ) ; 
-
+    setTimeout( function(){
+      run( selectedLink ) ; 
+    }, 0 ) ;
+    
   }
 
   function run( selectedLink ) { 
@@ -71,17 +69,17 @@ javascript:(function() {
   function searchCrossPosts( seenit ) { 
 
     var links = new Array() ;
-    var submissionsSearched = jQuery( "a.comments", seenit ).length ; 
+    var totalSubmissionsToSearch = jQuery( "a.comments", seenit ).length ;
+    var submissionsSearched = 0 ; 
 
     jQuery( "a.comments", seenit ).each( function( key, commentsUrl ) { 
 
       /*console.debug( key + " -> " + value ) ; */
       searchSpecificPost( links, commentsUrl ) ; 
+      links.sort( reverseSort ) ;
+      showModal( ++submissionsSearched, totalSubmissionsToSearch, links ) ;
 
     }) ; 
-
-    links.sort( reverseSort ) ; 
-    showModal( submissionsSearched, links ) ; 
 
   }
 
@@ -147,14 +145,20 @@ javascript:(function() {
 
   }
 
-  function showModal( submissionsSearched, links ) {
+  function showModal( submissionsSearched, totalSubmissionsToSearch, links ) {
     
     /*First remove all previously added modals*/
-    jQuery( "div#dialog" ).remove() ;
+    jQuery( "div#ral-dialog" ).remove() ;
 
-    var div = buildDiv( submissionsSearched, links ) ; 
-    jQuery( "body" ).append( div ) ; 
-    jQuery( "div#dialog" ).dialog({
+    var div = buildDiv( submissionsSearched, totalSubmissionsToSearch, links ) ; 
+
+    if( jQuery( "div#ral-dialog" )[0] ) { 
+      jQuery( "div#ral-dialog" ).html( jQuery( div ).html() ) ; 
+    } else { 
+      jQuery( "body" ).append( div ) ; 
+    }
+
+    jQuery( "div#ral-dialog" ).dialog({
       width:'auto'
     }) ;
 
@@ -189,11 +193,11 @@ javascript:(function() {
 
   }
 
-  function buildDiv( submissionsSearched, links ) { 
+  function buildDiv( submissionsSearched, totalSubmissionsToSearch, links ) { 
 
-    var div = "<div id='dialog' title='R.A.L. - " + globalVersion + "'>" ;
+    var div = "<div id='ral-dialog' title='R.A.L. - " + globalVersion + "'>" ;
 
-    div += "<a>Submissions Searched: " + submissionsSearched + "</a><hr />" ; 
+    div += "<a>Submissions Searched: " + submissionsSearched + "/" + totalSubmissionsToSearch + "</a><hr />" ; 
     div += "<p>Link Occurrences -> Combined Points -> Link</p>" ; 
 
     links = collapseLinks( links ) ; 
