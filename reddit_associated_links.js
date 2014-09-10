@@ -12,6 +12,8 @@ javascript:(function() {
 
       TODO:     1:  Progress bar for search status
                 2:  Put results in a table instead of simple paragraph rows.
+
+      Issues:   1:  If not logged in, the search for existing posts seems to break
    */
 
   var globalVersion = "v1.0 - NSF_Zebras" ;
