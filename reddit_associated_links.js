@@ -143,6 +143,15 @@ javascript:(function() {
 
       document.getElementsByTagName( "head" )[0].appendChild( cssref ) ;
 
+      /* Insert css for the results table */
+      jQuery('html > head').append( jQuery( 
+        '<style>' +
+        '.ral-table tr.title { background-color: lightgray; text-align: center; } ' +
+        '.ral-table tr.title td { padding-left: 4px; padding-right: 4px; } ' + 
+        '.ral-table td.ral-number { text-align: right; padding-right: 15px; } ' +
+        '</style>' 
+      )) ;
+
     }    
 
   }
@@ -154,8 +163,11 @@ javascript:(function() {
 
     var div = buildDiv( submissionsSearched, totalSubmissionsToSearch, links ) ; 
 
+    /* If it already exists... */
     if( jQuery( "div#ral-dialog" )[0] ) { 
       jQuery( "div#ral-dialog" ).html( jQuery( div ).html() ) ; 
+
+    /* Else: create it */
     } else { 
       jQuery( "body" ).append( div ) ; 
     }
@@ -200,8 +212,8 @@ javascript:(function() {
     var div = "<div id='ral-dialog' title='R.A.L. - " + globalVersion + "'>" ;
 
     div += "<a>Submissions Searched: " + submissionsSearched + "/" + totalSubmissionsToSearch + "</a><hr />" ; 
-    div += "<table>" ;
-    div += "<tr><td>Link Occurrences</td><td>Combined Points</td><td>Link</td></tr>" ; 
+    div += "<table class='ral-table'>" ;
+    div += "<tr class='title'><td>Link Occurrences</td><td>Combined Points</td><td>Link</td></tr>" ; 
 
     links = collapseLinks( links ) ; 
     for( var i = 0 ; i < links.length ; i++ ) { 
@@ -209,7 +221,7 @@ javascript:(function() {
       var link = links[i] ; 
 
       if( link.href != "undefined" ) { 
-        div += "<tr><td>" + link.occurrences + "</td><td>" + link.points + "</td><td><a href='" + link.href + "'>" + link.text + "</td></tr>" ; 
+        div += "<tr><td class='ral-number'>" + link.occurrences + "</td><td class='ral-number'>" + link.points + "</td><td><a href='" + link.href + "'>" + link.text + "</td></tr>" ; 
       }
 
     }
