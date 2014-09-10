@@ -198,7 +198,8 @@ javascript:(function() {
     var div = "<div id='ral-dialog' title='R.A.L. - " + globalVersion + "'>" ;
 
     div += "<a>Submissions Searched: " + submissionsSearched + "/" + totalSubmissionsToSearch + "</a><hr />" ; 
-    div += "<p>Link Occurrences -> Combined Points -> Link</p>" ; 
+    div += "<table>" ;
+    div += "<tr><td>Link Occurrences</td><td>Combined Points</td><td>Link</td></tr>" ; 
 
     links = collapseLinks( links ) ; 
     for( var i = 0 ; i < links.length ; i++ ) { 
@@ -206,12 +207,12 @@ javascript:(function() {
       var link = links[i] ; 
 
       if( link.href != "undefined" ) { 
-        div += "<p>" + link.occurrences + " -> " + link.points + " -> <a href='" + link.href + "'>" + link.text + "</a></p>" ; 
+        div += "<tr><td>" + link.occurrences + "</td><td>" + link.points + "</td><td><a href='" + link.href + "'>" + link.text + "</td></tr>" ; 
       }
 
     }
 
-    div += "</div>" ;
+    div += "</table></div>" ;
 
     return div ; 
 
