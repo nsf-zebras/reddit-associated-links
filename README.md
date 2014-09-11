@@ -15,3 +15,6 @@ There's two ways to use this tool.
 
 1: Highlight the link you wish to search for, then click the bookmarklet.
 2: Click the bookmarklet, checkboxes will appear beside each post.  Check the one you wish to search for and run the bookmarklet again.
+
+Here is an example of it running on Firefox for Android using above method #2
+![Firefox for Android](https://raw.githubusercontent.com/nsf-zebras/reddit-associated-links/master/img/ral%20on%20mobile.png)
