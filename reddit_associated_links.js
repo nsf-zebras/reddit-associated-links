@@ -13,7 +13,7 @@ javascript:(function() {
       TODO:     1:  Progress bar for search status
                 2:  Put results in a table instead of simple paragraph rows.
 
-      Issues:   1:  If not logged in, the search for existing posts seems to break
+      Issues:   1:  Sometimes searching for a link's previous posts ends up at a login page
    */
 
   var globalVersion = "v1.0 - NSF_Zebras" ;
@@ -47,9 +47,12 @@ javascript:(function() {
 
   function run( selectedLink ) { 
 
+    var encodedUrl = "/submit?url=" + encodeURIComponent( jQuery( selectedLink ).attr( "href" ) ) ;
+    /*console.debug( "Encoded URL", encodedUrl ) ;*/
+
     jQuery.ajax({
 
-      url: "http://www.reddit.com/submit?url=" + jQuery( selectedLink ).attr( "href" ),
+      url: encodedUrl,
       type: "GET"
 
     }).success( function( seenit ) { 
@@ -146,9 +149,9 @@ javascript:(function() {
       /* Insert css for the results table */
       jQuery('html > head').append( jQuery( 
         '<style>' +
-        '.ral-table tr.title { background-color: lightgray; text-align: center; } ' +
-        '.ral-table tr.title td { padding-left: 4px; padding-right: 4px; } ' + 
-        '.ral-table td.ral-number { text-align: right; padding-right: 15px; } ' +
+          '.ral-table tr.title { background-color: lightgray; text-align: center; } ' +
+          '.ral-table tr.title td { padding-left: 4px; padding-right: 4px; } ' + 
+          '.ral-table td.ral-number { text-align: right; padding-right: 15px; } ' +
         '</style>' 
       )) ;
 
