@@ -2,9 +2,7 @@ appreciate my work?
 ===================
 Consider buying me a beer :)
 
-Bitcoin Address: 1ByNinNVBqvDErNqxLSTSFkdMr1TBhUQjh
-
-Or use paypal to send beer money here: nsfzebras@gmail.com
+Use paypal to send beer money here: nsfzebras@gmail.com
 
 reddit-associated-links
 =======================
