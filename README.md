@@ -1,3 +1,11 @@
+appreciate my work?
+===================
+Consider buying me a beer :)
+
+Bitcoin Address: 1ByNinNVBqvDErNqxLSTSFkdMr1TBhUQjh
+
+Or use paypal to send beer money here: nsfzebras@gmail.com
+
 reddit-associated-links
 =======================
 
@@ -5,11 +13,11 @@ A tool to help find the source of a gif
 
 What it does is it will ask Reddit if the link has been posted before, then it searches through the comments of every post looking for links.  It then aggregates all the links together and shows you the list, reverse sorted by combined points.  Lots of times, you will see a link near the top entitled "source".
 
-Installation
+installation
 ============
 This code is set up as a "bookmarklet", which means all you need to do is create a bookmark and set the destination of the bookmark to the script.  You're done!
 
-Usage
+usage
 =====
 There's two ways to use this tool.
 
