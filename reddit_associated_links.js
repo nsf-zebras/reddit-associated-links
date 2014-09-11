@@ -10,9 +10,6 @@ javascript:(function() {
                     In other words, it will show you every link that has been 
                     posted as a response, including other postings. 
 
-      TODO:     1:  Progress bar for search status
-                2:  Put results in a table instead of simple paragraph rows.
-
       Issues:   1:  Sometimes searching for a link's previous posts ends up at a login page
    */
 
@@ -39,13 +36,42 @@ javascript:(function() {
     var selectedLink = getSelectionLink() ;
     /*console.log( selectedLink ) ; */    
 
-    setTimeout( function(){
-      run( selectedLink ) ; 
-    }, 0 ) ;
+    if( selectedLink == null ) { 
+      /* check if there is a checked ral-manual-checkbox checked */
+      selectedLink = getSelectionCheckbox() ; 
+    }
+
+    /* if it's still null, add the checkboxes */
+    if( selectedLink == null ) { 
+
+      /* Add a link beside each post that will let you perform the same function. */
+      if( jQuery( "div.ral-message" ).length == 0 ) { 
+        jQuery( "div#siteTable div:first" ).before( "<div class='ral-message'>Check the one to search for, and run the bookmarklet again</div>" ) ; 
+      }
+
+      /* remove any existing checkboxes, then add them */
+      jQuery( "input.ral-manual-checkbox" ).remove() ; 
+      jQuery( "a.title" ).after( "<input type='checkbox' class='ral-manual-checkbox' />" ) ; 
+
+    } else { 
+
+      setTimeout( function(){
+        run( selectedLink ) ; 
+      }, 0 ) ;
+
+    }
     
   }
 
+  function getPostBesideRelLink( relLink ) { 
+    console.log( relLink ) ; 
+  }
+
   function run( selectedLink ) { 
+
+    if( !selectedLink ) { 
+      return ;
+    }
 
     var encodedUrl = "/submit?url=" + encodeURIComponent( jQuery( selectedLink ).attr( "href" ) ) ;
     /*console.debug( "Encoded URL", encodedUrl ) ;*/
@@ -244,7 +270,21 @@ javascript:(function() {
       text = document.selection.createRange().text;
     }
     
-    return $('a').filter(function(index) { return $(this).text() === text ; }) ;
+    if( text ) { 
+      return $('a').filter( function(index) { return $(this).text() === text ; } ) ;
+    }
+    return null ; 
+
+  }
+
+  function getSelectionCheckbox() { 
+
+    var checked = jQuery( "input.ral-manual-checkbox:checked:first" ) ;     
+    if( checked.length > 0 ) { 
+      return jQuery( checked ).parent().find( "a.title" ) ; 
+    }
+    
+    return null ; 
 
   }
 
