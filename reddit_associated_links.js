@@ -3,7 +3,7 @@ javascript:(function() {
   /*  
       AUTHOR:       NSF_Zebras 
 
-      Version:      1.0 
+      Version:      1.0-b1
 
       Description:  Quickly search cross posts (of highlighted link) on reddit 
                     for any links posted as a comment, hoping to find the source! 
@@ -13,7 +13,7 @@ javascript:(function() {
       Issues:   1:  Sometimes searching for a link's previous posts ends up at a login page
    */
 
-  var globalVersion = "v1.0 - NSF_Zebras" ;
+  var globalVersion = "v1.0-b1 - NSF_Zebras" ;
 
   /*Class definitions*/
 
