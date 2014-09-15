@@ -25,7 +25,7 @@ javascript:(function() {
 	var fileref = document.createElement( 'script' ) ;
 
 	fileref.setAttribute( "type", "text/javascript" ) ;
-	fileref.setAttribute( "src", "//raw.githubusercontent.com/nsf-zebras/reddit-associated-links/" + ralBranch + "/reddit_associated_links.js" ) ;
+	fileref.setAttribute( "src", "//raw.githubusercontent.com/nsf-zebras/reddit-associated-links/" + ralBranch + "/src/reddit_associated_links.js" ) ;
 
 	document.getElementsByTagName( "head" )[0].appendChild( fileref ) ;
 
