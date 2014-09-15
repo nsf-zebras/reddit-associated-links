@@ -66,10 +66,6 @@ javascript:(function() {
     
   }
 
-  function getPostBesideRelLink( relLink ) { 
-    console.log( relLink ) ; 
-  }
-
   function run( selectedLink ) { 
 
     if( !selectedLink ) { 
