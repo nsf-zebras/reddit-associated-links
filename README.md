@@ -29,10 +29,13 @@ If you want to manually edit your helper script to point to a different branch, 
 
 usage
 =====
-There's two ways to use this tool.
+There's three ways to use this tool.
 
-1: Highlight the link you wish to search for, then click the bookmarklet.
-2: Click the bookmarklet, checkboxes will appear beside each post.  Check the one you wish to search for and run the bookmarklet again.
+1: The easiest way is when you're in the comments of a post.  Since there is only one link, RAL will assume this is the post you wish to search for and automatically begin searching for that one.
 
-Here is an example of it running on Firefox for Android using above method #2
+2: Highlight the link you wish to search for, then click the bookmarklet.
+
+3: (Useful on mobile, where it's difficult to highlight a link and then run a bookmark): Click the bookmarklet, checkboxes will appear beside each post.  Check the one you wish to search for and run the bookmarklet again.
+
+Here is an example of it running on Firefox for Android using above method #3
 ![Firefox for Android](https://raw.githubusercontent.com/nsf-zebras/reddit-associated-links/master/img/ral%20on%20mobile.png)
