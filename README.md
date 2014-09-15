@@ -13,7 +13,19 @@ What it does is it will ask Reddit if the link has been posted before, then it s
 
 installation
 ============
+After reading the following paragraphs in this section, the short form is this: (1) View the source of the specific script you choose to use.  (2)  Copy the contents of the script.  (3) Create a new bookmark, and in the place of the address, paste the code you copied from the script in step 2.  (4) Save.
+
 This code is set up as a "bookmarklet", which means all you need to do is create a bookmark and set the destination of the bookmark to the script.  You're done!
+
+You can choose between the raw script, and a "helper" style script.  The helper will automatically pull the latest core from the specified branch.  To use the helper, simply create a bookmark, and set it's address to the content of one of the scripts with "autoupdate" in the title.
+
+release branches
+================
+If you want to manually edit your helper script to point to a different branch, find the part that specifies "var branch = BRANCHNAME" and change whatever is in the place of BRANCHNAME with with one of the following (without the quotes):
+
+(Currently there is only one).
+
+"beta"
 
 usage
 =====
