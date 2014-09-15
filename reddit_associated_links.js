@@ -33,7 +33,10 @@ javascript:(function() {
 
     importJQUI() ; 
 
-    var selectedLink = getSelectionLink() ;
+    /* Check if it's just a single item page. */
+    var isSinglePage = jQuery( "body" ).hasClass( "single-page" ) ;
+
+    var selectedLink = isSinglePage? jQuery( "div.thing:first div.entry a.title" ) : getSelectionLink() ;
     /*console.log( selectedLink ) ; */    
 
     if( selectedLink == null ) { 
